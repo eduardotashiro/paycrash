@@ -4,22 +4,22 @@
 O gateway vai precisar ler variaveis de ambiente(porta, ambiente,chaves e etc), de forma confiável. no Go tem várias opções: `os.Getenv` muito manual...`godotenv` só lê, não valida tipos...Enfim...Preciso de algo que valide tipos, tenha defaults e funcione igual em dev e prod.
 
 ## Decisão
-Usar `github.com/kelseyhightower/envconfig`
+Usar [`github.com/kelseyhightower/envconfig`](https://github.com/kelseyhightower/envconfig)
 
 ### Alternativas consideradas
 
-**`github.com/joho/godotenv`**
+**[`github.com/joho/godotenv`](https://github.com/joho/godotenv)**
 - RECHAZADO: apenas carrega arquivo `.env` para `os.Environ`, não
   valida tipos e em produção (Docker/K8s) o `.env` nem é lido.
 
-**`os.Getenv` FULL manual **
+**`os.Getenv` FULL manual**
 - RECHAZADO: verboso, sem validação de tipos, fácil de esquecer
   defaults, difícil de auditar quais variáveis a aplicação usa.
 
-**`github.com/spf13/viper`**
+[**`github.com/spf13/viper`**](https://github.com/spf13/viper)
 - RECHAZADO (por agora): muito poderoso para o caso atual, traz
   complexidade (ler de arquivo, env, flags, remote config) que
-  não precisamos ainda. Reconsiderar se surgir necessidade de
+  não preciso ainda. Reconsiderar se surgir necessidade de
   múltiplas fontes de configuração e etc...
 
 ## Consequências
