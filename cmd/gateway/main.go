@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"log/slog"
 	"net/http"
 	"os"
@@ -24,12 +23,11 @@ func main() {
 
 	http.HandleFunc("/healthcheck", healthHandler)
 
-	slog.Info("server starting")
-	slog.String("port", conf.Port)
-	slog.String("port", conf.Env)
+	slog.Info("server starting", slog.String("port", conf.Port), slog.String("env", conf.Env))
 
 	if err := http.ListenAndServe(conf.Port, nil); err != nil {
-		fmt.Printf("Error: %v\n", err)
+		logger.Error("server failed", slog.String("error", err.Error()))
+		os.Exit(1)
 	}
 }
 
