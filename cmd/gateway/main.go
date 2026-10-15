@@ -3,24 +3,32 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"log"
+	"log/slog"
 	"net/http"
 	"os"
 
-	"github.com/joho/godotenv"
+	"github.com/eduardotashiro/paycrash/internal/config"
 )
 
 func main() {
-	if err := godotenv.Load(); err != nil {
-		log.Fatal(err)
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
+		Level: slog.LevelInfo,
+	}))
+	slog.SetDefault(logger)
+
+	conf, err := config.Load()
+	if err != nil {
+		logger.Error("failed to load config", slog.String("error", err.Error()))
+		os.Exit(1)
 	}
-	port := os.Getenv("HEALTH_PORT")
 
 	http.HandleFunc("/healthcheck", healthHandler)
 
-	fmt.Printf("Listening on %v", port)
+	slog.Info("server starting")
+	slog.String("port", conf.Port)
+	slog.String("port", conf.Env)
 
-	if err := http.ListenAndServe(port, nil); err != nil {
+	if err := http.ListenAndServe(conf.Port, nil); err != nil {
 		fmt.Printf("Error: %v\n", err)
 	}
 }
