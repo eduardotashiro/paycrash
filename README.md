@@ -12,21 +12,23 @@
  / /\ \  ´:       ::   : :    :     :: :: . ;:   ::  .:    .: .:.:.:; :'   :.'   / /\ \
  \ \/ /   .       ..   . .    .     .. ..    .   . .  .     .  . . .   .   . .   \ \/ /
   \/ /    .       .     .     .     .   .   .     .   .     .   . .   .     .     \/ / 
- / /\.--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--./ /\ 
-/ /\ \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \/\ \ 
-\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `' /
- `--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--' 
+ / /\.--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--. / /\ 
+/ /\ \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. / /\ \ 
+\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'  /'´ /
+ `--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'-`--'
 </pre>
 </div>
 
-## the payment system that crashes the fraudsters u know
-
-**Payment platform** built as a Go monorepo with **fraud decision**
-
-*Any resemblance to reality is pure coincidence.*   
-
 <div align="center">
 
-**Made with 💀 by [Eduardo Tashiro](https://www.youtube.com/watch?v=hAx4Lql_-VI&t=15s)**
+_PAYCRASH_ is a personal project focused on building a payment splitting system that distributes payments among multiple recipients.
+
+**Payment Splitting:** Calculate how much each participant receives
+
+**Recipients:** Register the participants involved in a payment split
+
+**Splitting Methods:** Divide a payment equally, by percentage or by fixed amounts
+
+> This is an educational project, it does not process real payments
 
 </div>
