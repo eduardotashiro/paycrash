@@ -59,9 +59,6 @@ func (m *Merchant) Validate() error {
 		return errors.New("name_fantasy is required")
 	}
 
-	if m.Status == statusBlocked {
-		return errors.New("merchant_blocked")
-	}
 	return nil
 }
 
