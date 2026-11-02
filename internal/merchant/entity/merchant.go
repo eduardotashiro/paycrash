@@ -6,13 +6,13 @@ import (
 )
 
 const (
-	statusActive  = "ACTIVE"
-	statusBlocked = "BLOCKED"
+	isActive  = "ACTIVE"
+	isBlocked = "BLOCKED"
 )
 
 type Merchant struct {
-	ID             string
-	PartnerID      string
+	Id             string
+	PartnerId      string
 	DocumentNumber string
 	DocumentType   string
 	NameFantasy    string
@@ -21,15 +21,15 @@ type Merchant struct {
 	UpdatedAt      time.Time
 }
 
-func NewMerchant(id, partnerID, documentNumber, documentType, nameFantasy string) (*Merchant, error) {
+func NewMerchant(id, partnerId, documentNumber, documentType, nameFantasy string) (*Merchant, error) {
 	now := time.Now()
 	m := &Merchant{
-		ID:             id,
-		PartnerID:      partnerID,
+		Id:             id,
+		PartnerId:      partnerId,
 		DocumentNumber: documentNumber,
 		DocumentType:   documentType,
 		NameFantasy:    nameFantasy,
-		Status:         statusActive,
+		Status:         isActive,
 		CreatedAt:      now,
 		UpdatedAt:      now,
 	}
@@ -43,10 +43,10 @@ func NewMerchant(id, partnerID, documentNumber, documentType, nameFantasy string
 }
 
 func (m *Merchant) Validate() error {
-	if m.ID == "" {
+	if m.Id == "" {
 		return errors.New("merchant_id is required")
 	}
-	if m.PartnerID == "" {
+	if m.PartnerId == "" {
 		return errors.New("partner_id is required")
 	}
 	if m.DocumentNumber == "" {
@@ -64,6 +64,12 @@ func (m *Merchant) Validate() error {
 
 func (m *Merchant) Block() {
 	now := time.Now()
-	m.Status = statusBlocked
+	m.Status = isBlocked
 	m.UpdatedAt = now
+}
+
+func (p *Merchant) Unblock() {
+	now := time.Now()
+	p.Status = isActive
+	p.UpdatedAt = now
 }
