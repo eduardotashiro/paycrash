@@ -6,32 +6,32 @@ import (
 )
 
 const (
-	isActive  = "ACTIVE"
-	isBlocked = "BLOCKED"
+	isActive  = "Active"
+	isBlocked = "Blocked"
 )
 
 type Merchant struct {
-	Id             string
-	PartnerId      string
-	DocumentNumber string
-	DocumentType   string
-	NameFantasy    string
-	Status         string
-	CreatedAt      time.Time
-	UpdatedAt      time.Time
+	Id           string
+	PartnerId    string
+	Document     string
+	DocumentType string
+	FantasyName  string
+	Status       string
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
 }
 
-func NewMerchant(id, partnerId, documentNumber, documentType, nameFantasy string) (*Merchant, error) {
+func NewMerchant(id, partnerId, document, documentType, fantasyName string) (*Merchant, error) {
 	now := time.Now()
 	m := &Merchant{
-		Id:             id,
-		PartnerId:      partnerId,
-		DocumentNumber: documentNumber,
-		DocumentType:   documentType,
-		NameFantasy:    nameFantasy,
-		Status:         isActive,
-		CreatedAt:      now,
-		UpdatedAt:      now,
+		Id:           id,
+		PartnerId:    partnerId,
+		Document:     document,
+		DocumentType: documentType,
+		FantasyName:  fantasyName,
+		Status:       isActive,
+		CreatedAt:    now,
+		UpdatedAt:    now,
 	}
 
 	err := m.Validate()
@@ -43,23 +43,24 @@ func NewMerchant(id, partnerId, documentNumber, documentType, nameFantasy string
 }
 
 func (m *Merchant) Validate() error {
+	var errs []error
+
 	if m.Id == "" {
-		return errors.New("merchant_id is required")
+		errs = append(errs, errors.New("merchantId is required"))
 	}
 	if m.PartnerId == "" {
-		return errors.New("partner_id is required")
+		errs = append(errs, errors.New("partnerId is required"))
 	}
-	if m.DocumentNumber == "" {
-		return errors.New("document_number is required")
+	if m.Document == "" {
+		errs = append(errs, errors.New("document is required"))
 	}
 	if m.DocumentType == "" {
-		return errors.New("document_type is required")
+		errs = append(errs, errors.New("documentType is required"))
 	}
-	if m.NameFantasy == "" {
-		return errors.New("name_fantasy is required")
+	if m.FantasyName == "" {
+		errs = append(errs, errors.New("fantasyName is required"))
 	}
-
-	return nil
+	return errors.Join(errs...)
 }
 
 func (m *Merchant) Block() {

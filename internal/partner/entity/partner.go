@@ -6,30 +6,30 @@ import (
 )
 
 const (
-	isActive  = "ACTIVE"
-	isBlocked = "BLOCKED"
+	isActive  = "Active"
+	isBlocked = "Blocked"
 )
 
 type Partner struct {
-	Id             string
-	Status         string
-	DocumentNumber string
-	DocumentType   string
-	NameFantasy    string
-	CreatedAt      time.Time
-	UpdatedAt      time.Time
+	Id           string
+	Status       string
+	Document     string
+	DocumentType string
+	FantasyName  string
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
 }
 
-func NewPartner(id, documentNumber, documentType, nameFantasy string) (*Partner, error) {
+func NewPartner(id, document, documentType, fantasyName string) (*Partner, error) {
 	now := time.Now()
 	p := &Partner{
-		Id:             id,
-		DocumentNumber: documentNumber,
-		DocumentType:   documentType,
-		NameFantasy:    nameFantasy,
-		Status:         isActive,
-		CreatedAt:      now,
-		UpdatedAt:      now,
+		Id:           id,
+		Document:     document,
+		DocumentType: documentType,
+		FantasyName:  fantasyName,
+		Status:       isActive,
+		CreatedAt:    now,
+		UpdatedAt:    now,
 	}
 
 	err := p.Validate()
@@ -41,20 +41,21 @@ func NewPartner(id, documentNumber, documentType, nameFantasy string) (*Partner,
 }
 
 func (p *Partner) Validate() error {
+	var errs []error
+
 	if p.Id == "" {
-		return errors.New("partner_id is required")
+		errs = append(errs, errors.New("partnerId is required"))
 	}
-	if p.DocumentNumber == "" {
-		return errors.New("document_number is required")
+	if p.Document == "" {
+		errs = append(errs, errors.New("document is required"))
 	}
 	if p.DocumentType == "" {
-		return errors.New("document_type is required")
+		errs = append(errs, errors.New("documentType is required"))
 	}
-	if p.NameFantasy == "" {
-		return errors.New("name_fantasy is required")
+	if p.FantasyName == "" {
+		errs = append(errs, errors.New("fantasyName is required"))
 	}
-
-	return nil
+	return errors.Join(errs...)
 }
 
 func (p *Partner) Block() {

@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	isAvailable   = "AVAILABLE"
-	isUnavailable = "UNAVAILABLE"
+	isAvailable   = "Available"
+	isUnavailable = "Unavailable"
 )
 
 type Product struct {
@@ -43,20 +43,22 @@ func NewProduct(id, merchantId, productDescription string, amount, quantity int6
 }
 
 func (p *Product) Validate() error {
+	var errs []error
+
 	if p.Id == "" {
-		return errors.New("product_id is required")
+		errs = append(errs, errors.New("product_id is required"))
 	}
 	if p.MerchantId == "" {
-		return errors.New("merchant_id is required")
+		errs = append(errs, errors.New("merchant_id is required"))
 	}
 	if p.ProductDescription == "" {
-		return errors.New("product_description is required")
+		errs = append(errs, errors.New("product_description is required"))
 	}
 	if p.Amount <= 0 {
-		return errors.New("amount is required")
+		errs = append(errs, errors.New("amount is required"))
 	}
 	if p.Quantity == 0 {
-		return errors.New("quantity is required")
+		errs = append(errs, errors.New("quantity is required"))
 	}
 
 	return nil

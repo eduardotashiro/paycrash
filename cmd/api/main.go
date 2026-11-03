@@ -1,27 +1,18 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
+
+	merchantHandler "github.com/eduardotashiro/paycrash/internal/merchant/handler"
+	partnerHandler "github.com/eduardotashiro/paycrash/internal/partner/handler"
+	productHandler "github.com/eduardotashiro/paycrash/internal/product/handler"
 )
 
 func main() {
 
-	http.HandleFunc("/hello", hello)
-	http.HandleFunc("/headers", headers)
+	http.HandleFunc("POST /merchant", merchantHandler.CreateMerchant)
+	http.HandleFunc("POST /partner", partnerHandler.CreatePartner)
+	http.HandleFunc("POST /partner", productHandler.CreateProduct)
 
 	http.ListenAndServe(":8090", nil)
-}
-
-func hello(w http.ResponseWriter, req *http.Request) {
-
-	fmt.Fprintf(w, "bora almoçar\n")
-}
-
-func headers(w http.ResponseWriter, req *http.Request) {
-	for name, headers := range req.Header {
-		for _, h := range headers {
-			fmt.Fprintf(w, "%v: %v\n", name, h)
-		}
-	}
 }
