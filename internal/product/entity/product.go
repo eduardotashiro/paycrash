@@ -61,7 +61,7 @@ func (p *Product) Validate() error {
 		errs = append(errs, errors.New("quantity is required"))
 	}
 
-	return nil
+	return errors.Join(errs...)
 }
 
 func (p *Product) Block() {
