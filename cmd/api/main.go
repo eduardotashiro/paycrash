@@ -12,7 +12,7 @@ func main() {
 
 	http.HandleFunc("POST /merchant", merchantHandler.CreateMerchant)
 	http.HandleFunc("POST /partner", partnerHandler.CreatePartner)
-	http.HandleFunc("POST /partner", productHandler.CreateProduct)
+	http.HandleFunc("POST /product", productHandler.CreateProduct)
 
 	http.ListenAndServe(":8090", nil)
 }
