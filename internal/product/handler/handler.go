@@ -15,7 +15,7 @@ type createProductRequest struct {
 	Quantity           int64  `json:"itemQuantity"`
 }
 
-type partnerResponse struct {
+type ProductResponse struct {
 	Code string          `json:"code"`
 	Data *entity.Product `json:"data"`
 }
@@ -42,7 +42,7 @@ func CreateProduct(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(partnerResponse{
+	json.NewEncoder(w).Encode(ProductResponse{
 		Code: http.StatusText(http.StatusCreated),
 		Data: product,
 	})
