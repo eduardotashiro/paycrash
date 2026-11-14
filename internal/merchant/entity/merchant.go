@@ -3,6 +3,8 @@ package entity
 import (
 	"errors"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 const (
@@ -11,8 +13,7 @@ const (
 )
 
 type Merchant struct {
-	Id           string
-	PartnerId    string
+	Id           uuid.UUID
 	Document     string
 	DocumentType string
 	FantasyName  string
@@ -21,11 +22,10 @@ type Merchant struct {
 	UpdatedAt    time.Time
 }
 
-func NewMerchant(id, partnerId, document, documentType, fantasyName string) (*Merchant, error) {
+func NewMerchant(id uuid.UUID, document, documentType, fantasyName string) (*Merchant, error) {
 	now := time.Now()
 	m := &Merchant{
 		Id:           id,
-		PartnerId:    partnerId,
 		Document:     document,
 		DocumentType: documentType,
 		FantasyName:  fantasyName,
@@ -45,12 +45,6 @@ func NewMerchant(id, partnerId, document, documentType, fantasyName string) (*Me
 func (m *Merchant) Validate() error {
 	var errs []error
 
-	if m.Id == "" {
-		errs = append(errs, errors.New("merchantId is required"))
-	}
-	if m.PartnerId == "" {
-		errs = append(errs, errors.New("partnerId is required"))
-	}
 	if m.Document == "" {
 		errs = append(errs, errors.New("document is required"))
 	}
