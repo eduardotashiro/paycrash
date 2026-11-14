@@ -14,8 +14,8 @@ const (
 
 type Product struct {
 	Id                 uuid.UUID
-	Status             string
 	MerchantId         uuid.UUID
+	Status             string
 	ProductDescription string
 	Amount             int64
 	Quantity           int64
@@ -59,7 +59,7 @@ func (p *Product) Validate() error {
 	if p.Amount <= 0 {
 		errs = append(errs, errors.New("amount is required"))
 	}
-	if p.Quantity == 0 {
+	if p.Quantity <= 0 {
 		errs = append(errs, errors.New("quantity is required"))
 	}
 

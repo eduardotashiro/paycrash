@@ -16,8 +16,8 @@ func TestNewProduct(t *testing.T) {
 		quantity           int64
 		waitingTheError    bool
 	}{
-		{testName: "product created successfully", productDescription: "Jhonsons Baby 1L", amount: 1322, waitingTheError: false},
-		{testName: "error creating the product", productDescription: "Sabonete de enxofre", amount: 2213, quantity: 24, waitingTheError: true},
+		{testName: "product created successfully", id: uuid.New(), merchantId: uuid.New(), productDescription: "Jhonsons Baby 1L", amount: 1322, quantity: 42, waitingTheError: false},
+		{testName: "error creating the product", id: uuid.New(), merchantId: uuid.New(), productDescription: "Sabonete de enxofre", amount: 0, quantity: 0, waitingTheError: true},
 	}
 
 	for _, tt := range testes {

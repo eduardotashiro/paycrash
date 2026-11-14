@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	entityProduct "github.com/eduardotashiro/paycrash/internal/product/entity"
+	"github.com/eduardotashiro/paycrash/internal/product/entity"
 
 	"github.com/google/uuid"
 )
@@ -50,7 +50,7 @@ func CreateProduct(w http.ResponseWriter, r *http.Request) {
 
 	id := uuid.New()
 
-	product, err := entityProduct.NewProduct(id, req.MerchantId, req.ProductDescription, req.Amount, req.Quantity)
+	product, err := entity.NewProduct(id, req.MerchantId, req.ProductDescription, req.Amount, req.Quantity)
 	if err != nil {
 		writeError(w, http.StatusBadRequest, err)
 		return
@@ -58,11 +58,11 @@ func CreateProduct(w http.ResponseWriter, r *http.Request) {
 
 	responseData := productResponseData{
 		ID:                 product.Id,
-		Status:             product.Status,
 		MerchantId:         product.MerchantId,
 		ProductDescription: product.ProductDescription,
 		Amount:             product.Amount,
 		Quantity:           product.Quantity,
+		Status:             product.Status,
 		CreatedAt:          product.CreatedAt,
 	}
 
