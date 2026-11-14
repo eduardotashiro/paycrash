@@ -2,19 +2,21 @@ package entity
 
 import (
 	"testing"
+
+	"github.com/google/uuid"
 )
 
 func TestNewPartner(t *testing.T) {
 	testes := []struct {
 		testName        string
-		id              string
+		id              uuid.UUID
 		document        string
 		documentType    string
 		fantasyName     string
 		waitingTheError bool
 	}{
-		{testName: "partner created successfully", id: "uuid", document: "123.456.789-99", documentType: "cpf", fantasyName: "bar dos coroa", waitingTheError: false},
-		{testName: "error creating the partner", document: "999.876.543-21", documentType: "fpc", fantasyName: "coroa dos bar", waitingTheError: true},
+		{testName: "partner created successfully", document: "123.456.789-99", documentType: "cpf", fantasyName: "bar dos coroa", waitingTheError: false},
+		{testName: "error creating the partner", documentType: "fpc", fantasyName: "coroa dos bar", waitingTheError: true},
 	}
 
 	for _, tt := range testes {
@@ -30,15 +32,15 @@ func TestNewPartner(t *testing.T) {
 			}
 
 			if !tt.waitingTheError && partner != nil {
-				if partner.Id != tt.id {
-					t.Errorf("esperava o ID %s, mas he came %s", tt.id, partner.Id)
+				if partner.Document != tt.document {
+					t.Errorf("esperava o DOC %s, mas he came %s", tt.id, partner.Id)
 				}
 
 				if partner.FantasyName != tt.fantasyName {
 					t.Errorf("esperava o name %s, mas veio %s", tt.fantasyName, partner.FantasyName)
 				}
 				if partner.Status != "Active" {
-					t.Errorf("expected status Active, mas veio %s", partner.Status)
+					t.Errorf("expected status Active, but veio %s", partner.Status)
 				}
 			}
 
