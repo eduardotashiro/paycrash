@@ -2,20 +2,22 @@ package entity
 
 import (
 	"testing"
+
+	"github.com/google/uuid"
 )
 
 func TestNewProduct(t *testing.T) {
 	testes := []struct {
 		testName           string
-		id                 string
-		merchantId         string
+		id                 uuid.UUID
+		merchantId         uuid.UUID
 		productDescription string
 		amount             int64
 		quantity           int64
 		waitingTheError    bool
 	}{
-		{testName: "product created successfully", id: "uuid", merchantId: "idDoMerchant", productDescription: "Jhonsons Baby 1L", amount: 1322, quantity: 42, waitingTheError: false},
-		{testName: "error creating the product", merchantId: "MerchantDoId", productDescription: "Sabonete de enxofre", amount: 2213, quantity: 24, waitingTheError: true},
+		{testName: "product created successfully", productDescription: "Jhonsons Baby 1L", amount: 1322, waitingTheError: false},
+		{testName: "error creating the product", productDescription: "Sabonete de enxofre", amount: 2213, quantity: 24, waitingTheError: true},
 	}
 
 	for _, tt := range testes {

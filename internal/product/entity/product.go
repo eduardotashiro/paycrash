@@ -3,6 +3,8 @@ package entity
 import (
 	"errors"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 const (
@@ -11,9 +13,9 @@ const (
 )
 
 type Product struct {
-	Id                 string
+	Id                 uuid.UUID
 	Status             string
-	MerchantId         string
+	MerchantId         uuid.UUID
 	ProductDescription string
 	Amount             int64
 	Quantity           int64
@@ -21,7 +23,7 @@ type Product struct {
 	UpdatedAt          time.Time
 }
 
-func NewProduct(id, merchantId, productDescription string, amount, quantity int64) (*Product, error) {
+func NewProduct(id, merchantId uuid.UUID, productDescription string, amount, quantity int64) (*Product, error) {
 	now := time.Now()
 	p := &Product{
 		Id:                 id,
@@ -45,10 +47,10 @@ func NewProduct(id, merchantId, productDescription string, amount, quantity int6
 func (p *Product) Validate() error {
 	var errs []error
 
-	if p.Id == "" {
-		errs = append(errs, errors.New("product_id is required"))
+	if p.Id == uuid.Nil {
+		errs = append(errs, errors.New("id is required"))
 	}
-	if p.MerchantId == "" {
+	if p.MerchantId == uuid.Nil {
 		errs = append(errs, errors.New("merchant_id is required"))
 	}
 	if p.ProductDescription == "" {
