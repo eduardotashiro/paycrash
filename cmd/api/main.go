@@ -13,6 +13,7 @@ func main() {
 	http.HandleFunc("POST /merchant", merchantHandler.CreateMerchant)
 	http.HandleFunc("POST /partner", partnerHandler.CreatePartner)
 	http.HandleFunc("POST /product", productHandler.CreateProduct)
+	http.Handle("GET /docs/", http.StripPrefix("/docs/", http.FileServer(http.Dir("docs"))))
 
 	http.ListenAndServe(":8090", nil)
 }

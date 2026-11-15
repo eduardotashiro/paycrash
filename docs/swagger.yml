@@ -1,0 +1,231 @@
+openapi: 3.0.3
+info:
+  title: Paycrash API
+  description: Split payment simulation API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8090
+
+paths:
+  /partner:
+    post:
+      summary: Cria um novo Partner
+      tags:
+        - Partners
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePartnerRequest"
+      responses:
+        "201":
+          description: Partner criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PartnerResponse"
+        "400":
+          description: Erro de validação
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /merchant:
+    post:
+      summary: Cria um novo Merchant
+      tags:
+        - Merchants
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMerchantRequest"
+      responses:
+        "201":
+          description: Merchant criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MerchantResponse"
+        "400":
+          description: Erro de validação
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /product:
+    post:
+      summary: Cria um novo Produto
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProductRequest"
+      responses:
+        "201":
+          description: Produto criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        "400":
+          description: Erro de validação
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  schemas:
+    CreatePartnerRequest:
+      type: object
+      required:
+        - document
+        - documentType
+        - fantasyName
+      properties:
+        document:
+          type: string
+          example: "12.345.678/0001-99"
+        documentType:
+          type: string
+          example: "CNPJ"
+        fantasyName:
+          type: string
+          example: "Chronix Marketplace"
+
+    PartnerResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          example: "Created"
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            document:
+              type: string
+            documentType:
+              type: string
+            fantasyName:
+              type: string
+            status:
+              type: string
+              example: "Active"
+            createdAt:
+              type: string
+              format: date-time
+
+    CreateMerchantRequest:
+      type: object
+      required:
+        - document
+        - documentType
+        - fantasyName
+      properties:
+        document:
+          type: string
+          example: "999.888.777-66"
+        documentType:
+          type: string
+          example: "CPF"
+        fantasyName:
+          type: string
+          example: "Lojo do Dudu"
+
+    MerchantResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          example: "Created"
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            document:
+              type: string
+            documentType:
+              type: string
+            fantasyName:
+              type: string
+            status:
+              type: string
+              example: "Active"
+            createdAt:
+              type: string
+              format: date-time
+
+    CreateProductRequest:
+      type: object
+      required:
+        - merchantId
+        - productDescription
+        - amount
+        - itemQuantity
+      properties:
+        merchantId:
+          type: string
+          format: uuid
+        productDescription:
+          type: string
+          example: "Teclado Mecânico"
+        amount:
+          type: integer
+          description: Valor em centavos
+          example: 25000
+        itemQuantity:
+          type: integer
+          example: 10
+
+    ProductResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          example: "Created"
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            merchantId:
+              type: string
+              format: uuid
+            productDescription:
+              type: string
+            amount:
+              type: integer
+            quantity:
+              type: integer
+            status:
+              type: string
+              example: "Available"
+            createdAt:
+              type: string
+              format: date-time
+
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          example: "Bad Request"
+        errors:
+          type: array
+          items:
+            type: string
+          example: ["document is required", "fantasyName is required"]
