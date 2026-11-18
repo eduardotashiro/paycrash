@@ -4,6 +4,7 @@ import (
 	"errors"
 	"time"
 
+	"github.com/eduardotashiro/paycrash/pkg/document"
 	"github.com/google/uuid"
 )
 
@@ -22,10 +23,11 @@ type Merchant struct {
 	UpdatedAt    time.Time
 }
 
-func NewMerchant(id uuid.UUID, document, documentType, fantasyName string) (*Merchant, error) {
+func NewMerchant(document, documentType, fantasyName string) (*Merchant, error) {
 	now := time.Now()
+	uuid := uuid.New()
 	m := &Merchant{
-		Id:           id,
+		Id:           uuid,
 		Document:     document,
 		DocumentType: documentType,
 		FantasyName:  fantasyName,
@@ -48,12 +50,27 @@ func (m *Merchant) Validate() error {
 	if m.Document == "" {
 		errs = append(errs, errors.New("document is required"))
 	}
+
 	if m.DocumentType == "" {
 		errs = append(errs, errors.New("documentType is required"))
 	}
+
 	if m.FantasyName == "" {
 		errs = append(errs, errors.New("fantasyName is required"))
 	}
+
+	if m.DocumentType == "CPF" {
+		if !document.ValidateCPF(m.Document) {
+			errs = append(errs, errors.New("invalid CPF"))
+		}
+	} else if m.DocumentType == "CNPJ" {
+		if !document.ValidateCNPJ(m.Document) {
+			errs = append(errs, errors.New("invalid CNPJ"))
+		}
+	} else {
+		errs = append(errs, errors.New("documentType must be CPF or CNPJ"))
+	}
+
 	return errors.Join(errs...)
 }
 
